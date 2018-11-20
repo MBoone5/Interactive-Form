@@ -41,7 +41,36 @@ $(document).ready(() => {
 	//Important variables for T-Shirt select form
 	const $designSelectForm = $("#design");
 	const $colorSelectForm = $("#color");
+	const $punsColors = $(".puns-color");
+	const $heartColors= $(".heart-color");
 
+
+	// Hiding Color form
+	$colorSelectForm.hide();
+
+	// Event listener for T-shirt colors
+	$designSelectForm.change((event) => {
+		// Variable for current design selected
+		let $currentDesign = $(event.target).val();
+		console.log($currentDesign);
+		$colorSelectForm.prop("selectedIndex", 0);
+
+		// Conditional color form functionality
+		if ($currentDesign !== "default") {
+			$colorSelectForm.show();
+		}else {
+			$colorSelectForm.hide();
+		};
+
+		// Conditonal colors functionality
+		if ($currentDesign === "js puns") {
+			$heartColors.hide();
+			$punsColors.show();
+		} else {
+			$heartColors.show();
+			$punsColors.hide();
+		}
+	})
 
 
 	//Activities section: Events cannot conflict, and the sum of admission on the fly
