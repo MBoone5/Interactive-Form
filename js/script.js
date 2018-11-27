@@ -111,7 +111,7 @@ $(document).ready(() => {
 
 	// elements for displaying sum
 	$sumDiv = $("<div></div>").attr("id", "sum-div");
-	$sumH = $("<h1></h1>");
+	$sumH = $("<h1></h1>").text("$0");
 	$activitiesForm.append($sumDiv);
 	$sumDiv.append($sumH)
 
@@ -122,7 +122,7 @@ $(document).ready(() => {
 
 	$activitiesForm.change((event) => {
 		// add prices to an array
-		let $checkedEventsPrices = [];
+		let $checkedEventsPrices = [0];
 		$('.activities input:checked').each(function() {
     $checkedEventsPrices.push($(this).attr("value"))
 		});
