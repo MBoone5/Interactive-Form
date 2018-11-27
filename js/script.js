@@ -75,8 +75,43 @@ $(document).ready(() => {
 
 	//Activities section: Events cannot conflict, and the sum of admission on the fly
 	//Workshop time cannot conflict, and the conflictions are updated with changes in input
-		//Tues 0900-1200: JS Frameworks, Express
-		//Tues 1300-1600: JS Libraries, Node.js
+		//Slot A:Tues 0900-1200: JS Frameworks, Express
+		//Slot B:Tues 1300-1600: JS Libraries, Node.js
+	// important variables for activites forms
+	const $activitiesForm = $(".activites");
+	const $aEvents = $("input.slot-a");
+	const $bEvents = $("input.slot-b");
+
+	// event handler for slot a events
+	$aEvents.change((event) => {
+		// key variables for A events functionality
+		let $selectedAEvent = $(event.target);
+		let $checkedStatus = $("input.slot-a:checked")
+
+
+		// if one a event is selected, diable th eother
+		$aEvents.not($selectedAEvent).prop("disabled", true);
+
+		// if no a events are checked, both are enabled
+		if ($checkedStatus.length === 0) {
+			$aEvents.prop("disabled", false);
+		}
+	});
+
+	// event handler for slot b events 
+	$bEvents.change((event) => {
+		// key variables for A events functionality
+		let $selectedAEvent = $(event.target);
+		let $checkedStatus = $("input.slot-b:checked")
+
+		// if one a event is selected, diable th eother
+		$bEvents.not($selectedAEvent).prop("disabled", true);
+
+		// if no a events are checked, both are enabled
+		if ($checkedStatus.length === 0) {
+			$bEvents.prop("disabled", false);
+		}
+	});
 
 	//Payment section that shows chosen payment method div based on selection
 	//I.e. if Bitcoin is chosen, the fields for paypal and card are hidden

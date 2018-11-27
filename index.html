@@ -79,14 +79,33 @@
       </fieldset>
 
       <fieldset class="activities">
-        <legend>Register for Activities</legend>
-        <label><input type="checkbox" name="all"> Main Conference — $200</label>
-        <label><input type="checkbox" name="js-frameworks"> JavaScript Frameworks Workshop — Tuesday 9am-12pm, $100</label>
-        <label><input type="checkbox" name="js-libs"> JavaScript Libraries Workshop — Tuesday 1pm-4pm, $100</label>
-        <label><input type="checkbox" name="express"> Express Workshop — Tuesday 9am-12pm, $100</label>
-        <label><input type="checkbox" name="node"> Node.js Workshop — Tuesday 1pm-4pm, $100</label>
-        <label><input type="checkbox" name="build-tools"> Build tools Workshop — Wednesday 9am-12pm, $100</label>
-        <label><input type="checkbox" name="npm"> npm Workshop — Wednesday 1pm-4pm, $100</label>
+        <h2><legend>Register for Activities</legend></h2>
+				<h3>Primary Admission</h3>
+        <label><input value="200" type="checkbox" name="all"> Main Conference — $200</label>
+
+				<div class="">
+					<h2>Slot A Events</h2>
+					<h3>Tuesday, 9am-12pm</h3>
+					<!-- Slot a events -->
+					<label><input value="100" class="slot-a" type="checkbox" name="js-frameworks"> JavaScript Frameworks Workshop — Tuesday 9am-12pm, $100</label>
+					<label><input value="100" class="slot-a" type="checkbox" name="express"> Express Workshop — Tuesday 9am-12pm, $100</label>
+				</div>
+
+				<div class="">
+					<h2>Slot B Events</h2>
+					<h3>Tuesday, 1pm-4pm</h3>
+					<!-- Slot b events -->
+					<label><input value="100" class="slot-b" type="checkbox" name="js-libs"> JavaScript Libraries Workshop — Tuesday 1pm-4pm, $100</label>
+					<label><input value="100" class="slot-b" type="checkbox" name="node"> Node.js Workshop — Tuesday 1pm-4pm, $100</label>
+				</div>
+
+        <div class="">
+					<h2>2nd Day Events</h2>
+					<h3>Wednesday, 9am-4pm</h3>
+					<label><input value="100" type="checkbox" name="build-tools"> Build tools Workshop — Wednesday 9am-12pm, $100</label>
+
+	        <label><input value="100" type="checkbox" name="npm"> npm Workshop — Wednesday 1pm-4pm, $100</label>
+        </div>
 
       </fieldset>
       <fieldset>
