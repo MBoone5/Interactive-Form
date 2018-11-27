@@ -72,13 +72,9 @@ $(document).ready(() => {
 		}
 	})
 
-
-	//Activities section: Events cannot conflict, and the sum of admission on the fly
-	//Workshop time cannot conflict, and the conflictions are updated with changes in input
-		//Slot A:Tues 0900-1200: JS Frameworks, Express
-		//Slot B:Tues 1300-1600: JS Libraries, Node.js
-	// important variables for activites forms
-	const $activitiesForm = $(".activites");
+	// important variables for activites form
+	const $activitiesForm = $(".activities");
+	const $activitiesEvents = $(":checkbox")
 	const $aEvents = $("input.slot-a");
 	const $bEvents = $("input.slot-b");
 
@@ -98,7 +94,7 @@ $(document).ready(() => {
 		}
 	});
 
-	// event handler for slot b events 
+	// event handler for slot b events
 	$bEvents.change((event) => {
 		// key variables for A events functionality
 		let $selectedAEvent = $(event.target);
@@ -111,6 +107,37 @@ $(document).ready(() => {
 		if ($checkedStatus.length === 0) {
 			$bEvents.prop("disabled", false);
 		}
+	});
+
+	// elements for displaying sum
+	$sumDiv = $("<div></div>").attr("id", "sum-div");
+	$sumH = $("<h1></h1>");
+	$activitiesForm.append($sumDiv);
+	$sumDiv.append($sumH)
+
+	// event handler for updating sum
+	function add(a, b) {
+		return a + b;
+	}
+
+	$activitiesForm.change((event) => {
+		// add prices to an array
+		let $checkedEventsPrices = [];
+		$('.activities input:checked').each(function() {
+    $checkedEventsPrices.push($(this).attr("value"))
+		});
+
+		// get sum of prices
+		let sum = $checkedEventsPrices.reduce((a, b) => {
+			a = parseInt(a)
+			b = parseInt(b)
+			return a + b
+		});
+		console.log(sum);
+
+		// add value of sum to document
+		$sumH.text("$" + sum);
+
 	});
 
 	//Payment section that shows chosen payment method div based on selection
