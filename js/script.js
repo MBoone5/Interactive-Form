@@ -142,6 +142,40 @@ $(document).ready(() => {
 
 	//Payment section that shows chosen payment method div based on selection
 	//I.e. if Bitcoin is chosen, the fields for paypal and card are hidden
+	// important variables for payment forms
+	const $methodSelect = $("#payment");
+	const $cardInfo = $("#credit-card");
+	const $palMessage = $("#pal-div");
+	const $coinMessage = $("#coin-div");
+
+	// hiding forms initially
+	$cardInfo.hide();
+	$palMessage.hide();
+	$coinMessage.hide();
+
+	// event handler for payment forms
+	$methodSelect.change((event) => {
+		let $selectedMethod = $(event.target).val();
+		// conditional for showing form info
+		if ($selectedMethod === "credit card") {
+			$cardInfo.show();
+			$palMessage.hide();
+			$coinMessage.hide();
+		}else if ($selectedMethod === "paypal") {
+			$palMessage.show();
+			$cardInfo.hide();
+			$coinMessage.hide();
+		}else if ($selectedMethod === "bitcoin") {
+			$coinMessage.show();
+			$cardInfo.hide();
+			$palMessage.hide();
+		}else {
+			$cardInfo.hide();
+			$palMessage.hide();
+			$coinMessage.hide();
+		}
+	});
+
 
 	//Validated all of the above forms on the fly, and before letting the user post the form
 	//All form validatoin error messages must be custom and not HTML5 based
