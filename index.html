@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Register for Full Stack Conf</title>
   <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -20,11 +21,28 @@
       <fieldset>
         <legend>Basic Info</legend>
 
+				<!-- name input -->
         <label for="name">Name:</label>
-        <input type="text" id="name" name="user_name">
+				<input type="text" id="name" name="user_name" placeholder="A-Z, Spaces, and Hyphens only">
 
+				<!-- name error tips -->
+				<div class="form-tip ui-state-error ui-corner-all" id="name-tip">
+					<span id="digit-tip"><span class="ui-icon ui-icon-alert"></span> Digits Are Not Allowed</span>
+					<span id="spec-tip"><span class="ui-icon ui-icon-alert"></span> Special Characters Are Not Allowed</span>
+					<span id="any-tip"><span class="ui-icon ui-icon-alert"></span> This Field Is Required</span>
+				</div>
+
+				<!-- email input -->
         <label for="mail">Email:</label>
-        <input type="email" id="mail" name="user_email">
+        <input type="email" id="mail" name="user_email" placeholder="An Email Is Required">
+
+				<!-- email error tips -->
+				<div class="form-tip ui-state-error ui-corner-all" id="email-tip">
+					<span>
+						<span class="ui-icon ui-icon-alert"></span>
+						Please Enter A Valid Email Address
+					</span>
+				</div>
 
         <label for="title">Job Role</label>
         <select id="title" name="user_title">
@@ -80,6 +98,16 @@
 
       <fieldset class="activities">
         <h2><legend>Register for Activities</legend></h2>
+
+				<!-- activties error tip -->
+				<div class="form-tip ui-state-error ui-corner-all" id="act-tip">
+					<span>
+						<span class="ui-icon ui-icon-alert"></span>
+						You Must Sign Up For <em>At Least</em> 1 Event
+				</span>
+				</div>
+
+
 				<h3>Primary Admission</h3>
         <label><input value="200" type="checkbox" name="all"> Main Conference — $200</label>
 
@@ -119,21 +147,47 @@
           <option value="bitcoin">Bitcoin</option>
         </select>
 
+				<!-- error tip for pament form -->
+				<div class="form-tip ui-state-error ui-corner-all" id="pay-tip">
+					<span class="ui-icon ui-icon-alert"></span>
+					<span>
+						You Must Select A Method Of Payment
+					</span>
+				</div>
+
         <div id="credit-card" class="credit-card">
 
           <div class="col-6 col">
             <label for="cc-num">Card Number:</label>
         	  <input id="cc-num" name="user_cc-num" type="text">
+						<div class="form-tip ui-state-error ui-corner-all" id="card-tip">
+							<span>
+								<span class="ui-icon ui-icon-alert"></span>
+								Invalid Card Number
+						</span>
+						</div>
           </div>
 
           <div class="col-3 col">
             <label for="zip">Zip Code:</label>
             <input id="zip" name="user_zip" type="text">
+						<div class="form-tip ui-state-error ui-corner-all" id="zip-tip">
+							<span>
+								<span class="ui-icon ui-icon-alert"></span>
+								Invalid Zip Code
+						</span>
+						</div>
           </div>
 
           <div class="col-3 col">
             <label for="cvv">CVV:</label>
             <input id="cvv" name="user_cvv" type="text">
+						<div class="form-tip ui-state-error ui-corner-all" id="cvv-tip">
+							<span>
+								<span class="ui-icon ui-icon-alert"></span>
+						    Invalid CVV
+						</span>
+						</div>
           </div>
 
           <label for="exp-month">Expiration Date:</label>
@@ -177,11 +231,15 @@
 
 	</div>
 
-	<!-- jQuery CDN + script.js -->
+	<!-- jQuery/jQueryUi CDN + script.js -->
 	<script
 	  src="https://code.jquery.com/jquery-3.3.1.min.js"
 	  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
 	  crossorigin="anonymous"></script>
+	<script
+  	src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+  	integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+  	crossorigin="anonymous"></script>
 	<script src="js/script.js"></script>
 </body>
 </html>
