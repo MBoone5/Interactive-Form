@@ -141,13 +141,11 @@ $(document).ready(() => {
 	// this is declared globally so multiple functions can access it
 	let cardSelected = false;
 
-	// hiding forms initially
-	$cardInfo.hide();
-	$palMessage.hide();
-	$coinMessage.hide();
-
 	// function for showing the appropriate fields/message based on payment method
-	function showPayment(method) {
+	function showPayment(method = false) {
+		// method doesn't need to be passed if there isn't a selection
+
+		// conditional for showing the appropriate fields/message
 		if (method === "credit") {
 			$cardInfo.show();
 			$palMessage.hide();
@@ -166,7 +164,10 @@ $(document).ready(() => {
 			$coinMessage.hide();
 		}
 	}
-	
+
+	// hiding forms initially
+	showPayment();
+
 	// event handler for payment forms
 	$methodSelect.change((event) => {
 		let $selectedMethod = $(event.target).val();
@@ -182,13 +183,12 @@ $(document).ready(() => {
 			showPayment("bitcoin");
 		}else {
 			cardSelected = false;
-			showPayment(false);
+			showPayment();
 		}
 	});
+
 	// important variables for form validation
 	const $nameField = $("#name");
-	// const $activitiesForm = $(".activities");
-	// const $activitiesEvents = $(":checkbox");
 	const $cardFields = $("#credit-card input");
 	const $submitButton = $("button");
 	const $nameTipDiv = $("#name-tip");
@@ -201,6 +201,8 @@ $(document).ready(() => {
 	const $cvvTip = $("#cvv-tip");
 	const $zipTip = $("#zip-tip");
 	const $payTip = $("#pay-tip");
+
+	// these are declared globally so they can be accessed by multiple functions
 	let nameHasInput = false;
 	let nameValid = false;
 
@@ -217,21 +219,6 @@ $(document).ready(() => {
 	const containsAnything = /./;
 
 	// functions for form validation
-	/* these are seperate from the validateForms() function to keep things concise and modular */
-	// functions for swapping name tip errors
-	// word characters only, at least one, space characters and hyphens ok
-	/* this function will test if the name field has ever received input, and show the required error if it hasn't, or return the valid status of the name to be passed into the event listener on the name field if has received input */
-	function validName() {
-		let $nameInput = $nameField.val()
-		let nameStatus = nameExp.test($nameInput);
-		if (nameHasInput === false) {
-			$nameTipDiv.show("fade");
-			$digitTip.hide();
-			$specTip.hide();
-		}else{
-			return nameStatus;
-		}
-	}
 	// must follow RFC 5322 Email Standard
 	function validEmail() {
 		let $emailInput = $("#mail").val();
@@ -287,7 +274,7 @@ $(document).ready(() => {
 			return false;
 		}
 	}
-	// must have selected a mehtod of Payment
+	// must have selected a method of Payment
 	function validPayment() {
 		if ($methodSelect.val() != "select_method") {
 			$payTip.hide("fade")
@@ -297,29 +284,59 @@ $(document).ready(() => {
 			return false
 		}
 	}
-	// event handler for on the fly validation
+	// function for displaying appropriate name error tip
+	function nameError(state, issue = false) {
+		// if the name is valid, issue doesn't need to be passed into the function
+
+		// conditional for showing/hiding the wrapper and appropriate tips
+		if (state === true) {
+			$nameTipDiv.hide("fade")
+		}else {
+			$nameTipDiv.show("fade")
+			if (issue === "digit") {
+				$digitTip.show();
+				$specTip.hide();
+				$anyTip.hide();
+			}else if (issue === "special") {
+				$digitTip.hide();
+				$specTip.show();
+				$anyTip.hide();
+			}else if (issue === "empty") {
+				$nameField.effect("shake");
+				$digitTip.hide();
+				$specTip.hide();
+				$anyTip.show();
+			}
+		}
+	}
+	// word characters only, at least one, space characters and hyphens ok
+	/* this function will test if the name field has ever received input, and show
+	 the required error if it hasn't, or return the valid status of the name to be
+	  passed into the event listener on the name field if has received input */
+	function validName() {
+		let $nameInput = $nameField.val()
+		let nameStatus = nameExp.test($nameInput);
+		if (nameHasInput === false) {
+			nameError(false, "empty");
+		}else{
+			return nameStatus;
+		}
+	}
+	// event handler for on the fly  name validation
 	$nameField.bind("input", (event) => {
 		let $nameInput = $(event.target).val();
 		nameHasInput = true
 		if (validName()) {
 			nameValid = true
-			$nameTipDiv.hide("fade")
+			nameError(nameValid)
 		}else {
 			nameValid = false;
-			$nameTipDiv.show("fade");
 			if (containsDigit.test($nameInput)) {
-				$digitTip.show();
-				$specTip.hide();
-				$anyTip.hide();
+				nameError(nameValid, "digit");
 			} else if (containsSpec.test($nameInput)) {
-				$digitTip.hide();
-				$specTip.show();
-				$anyTip.hide();
+				nameError(nameValid, "special");
 			}else if (!containsAnything.test($nameInput)) {
-				$nameField.effect("shake");
-				$digitTip.hide();
-				$specTip.hide();
-				$anyTip.show();
+				nameError(nameValid, "empty");
 			}
 		}
 	});
@@ -330,7 +347,9 @@ $(document).ready(() => {
 			scrollTop: $(".form-tip:visible:first").offset().top - 100
 		}, 1000);
 	}
-	/* Even though it might be more logical or appealing for the conditional to test if the name is filled out properly first, it throws an error on "offset().top" if nameValid is tested first because an error isn't present by default, even though nameValid is false by default */
+
+	/* this function occurs seperately so that the forms can be validated in a
+	modular fashion i.e. you can pick and choose what's being validated */
 	function validateForms() {
 		if (cardSelected) {
 			if (validName() && validEmail() && validActivities() && validPayment() && validCreditCard() && validZip() && validCvv()) {
@@ -349,6 +368,7 @@ $(document).ready(() => {
 		}
 	}
 
+	// event handler to rpevent submit if anything is invalid
 	$submitButton.click((event) => {
 		let validationState = validateForms();
 		console.log(validationState);
