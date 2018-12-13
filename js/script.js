@@ -138,8 +138,6 @@ $(document).ready(() => {
 	const $cardInfo = $("#credit-card");
 	const $palMessage = $("#pal-div");
 	const $coinMessage = $("#coin-div");
-	// this is declared globally so multiple functions can access it
-	let cardSelected = false;
 
 	// function for showing the appropriate fields/message based on payment method
 	function showPayment(method = false) {
@@ -165,8 +163,11 @@ $(document).ready(() => {
 		}
 	}
 
-	// hiding forms initially
-	showPayment();
+	// card is selected by default
+	$methodSelect.val("credit card")
+	showPayment("credit");
+	// this is declared globally so multiple functions can access it
+	let cardSelected = true;
 
 	// event handler for payment forms
 	$methodSelect.change((event) => {
